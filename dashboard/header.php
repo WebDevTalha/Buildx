@@ -1,3 +1,13 @@
+<?php
+require_once('config.php');
+session_start();
+
+if(!isset($_SESSION['b_admin_loggedin'])){
+    header("location:login");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <!-- Mirrored from demo.dashboardpack.com/architectui-html-free/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Aug 2022 07:55:44 GMT -->
@@ -86,12 +96,11 @@
                                                 <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                             </a>
                                             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                                <button type="button" tabindex="0" class="dropdown-item">User Account</button>
-                                                <button type="button" tabindex="0" class="dropdown-item">Settings</button>
-                                                <h6 tabindex="-1" class="dropdown-header">Header</h6>
-                                                <button type="button" tabindex="0" class="dropdown-item">Actions</button>
+                                                <a href="change-profile-photo" class="dropdown-item">Change Profile Photo</a>
+                                                <a href="" class="dropdown-item">Settings</a>
+                                                <a href="change-password" class="dropdown-item">Change Password</a>
                                                 <div tabindex="-1" class="dropdown-divider"></div>
-                                                <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                                <a href="logout" class="dropdown-item">Logout</a>
                                             </div>
                                         </div>
                                     </div>
