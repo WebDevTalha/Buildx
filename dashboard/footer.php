@@ -23,6 +23,7 @@
         <script src="assets/scripts/jquery-3.6.0.min.js"></script>
         <script src="assets/scripts/tagify.min.js"></script>
         <script src="assets/scripts/tinymce.min.js"></script>
+        <script src="assets/scripts/sweetalert.min.js"></script>
         <script type="text/javascript" src="assets/scripts/main.js"></script>
     </body>
 

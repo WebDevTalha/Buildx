@@ -1,7 +1,6 @@
 <?php require_once('header.php'); ?>
 
 
-
 <div class="app-main__outer">
     <div class="app-main__inner">
         <div class="app-page-title">
@@ -28,7 +27,7 @@
                         <div class="form-row">
                               <div class="col-md-12 mb-3">
                                  <label for="validationCustom01">Name:</label>
-                                 <input type="text" class="form-control" id="validationCustom01" required />
+                                 <input type="text" name="name" class="form-control" id="validationCustom01" required />
                                  <div class="valid-feedback">
                                     Looks good!
                                  </div>
@@ -37,13 +36,13 @@
                         <div class="form-row">
                               <div class="col-md-12 mb-3">
                                  <label for="validationCustom03">Slug:</label>
-                                 <input type="text" class="form-control" id="validationCustom03" readonly required />
-                                 <div class="invalid-feedback">
-                                    Please provide a valid Slug.
+                                 <input type="text" name="slug" class="form-control" id="validationCustom03" readonly required />
+                                 <div class="invalid-feedback" id="invalidSlug">
+                                   Slug Is Already Exits.
                                  </div>
                               </div>
                         </div>
-                        <button class="btn btn-primary" type="submit">Create Category</button>
+                        <button class="btn btn-primary" type="submit" name="submit_btn">Create Category</button>
                      </form>
                      <script>
                         // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -90,3 +89,33 @@
       $("#validationCustom03").val(Text);        
    });
 </script>
+
+
+<?php
+
+if(isset($_POST['submit_btn'])){
+   $name = $_POST['name'];
+   $slug = $_POST['slug'];
+   $slug_count = categorySlugCount('slug',$slug);
+   echo $slug_count;
+   if($slug_count != 0){
+      echo '<script>
+      document.getElementById("invalidSlug").style.display = "block";
+      </script>';
+   }
+   else{
+      $stm=$pdo->prepare("INSERT INTO categories(name,slug) VALUES(?,?)");
+      $stm->execute(array($name,$slug));
+      echo "<script>
+      swal({
+        title: 'Success!',
+        text: 'Category Created Successfully!',
+        icon: 'success',
+        button: 'Ok!',
+      });
+      </script>";
+   }
+}
+
+
+?>

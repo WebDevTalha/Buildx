@@ -24,34 +24,33 @@
                <div class="main-card mb-3 card">
                   <div class="card-body">
                         <h5 class="card-title">Table with hover</h5>
+                        <?php
+                        $i = 1;
+                        $stm=$pdo->prepare("SELECT * FROM categories");
+                        $stm->execute(array());
+                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+                        ?>
                         <table class="mb-0 table table-hover">
                            <thead>
                               <tr>
                                     <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Category Name</th>
+                                    <th>Slug</th>
+                                    <th>Action</th>
                               </tr>
                            </thead>
                            <tbody>
+                              <?php foreach($result as $row) :?>
                               <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                    <th scope="row"><?php echo $i; $i++; ?></th>
+                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo $row['slug']; ?></td>
+                                    <td>
+                                          <a href="#" class="btn btn-warning text-white" title="Edit"><i class="pe-7s-note"></i></a>
+                                          <a href="#" class="btn btn-danger text-white" title="Delete"><i class="pe-7s-trash"></i></a>
+                                    </td>
                               </tr>
-                              <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                              </tr>
-                              <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                              </tr>
+                              <?php endforeach; ?>
                            </tbody>
                         </table>
                   </div>
