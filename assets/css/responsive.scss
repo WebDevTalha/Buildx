@@ -1,0 +1,193 @@
+
+
+@media all and (max-width:990px) {
+  .contact-us-today-area .contact-us-today h1 {
+    font-size: 2rem;
+  }
+  .video-area {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .video-area .video-wrapper {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 4rem 0;
+  }
+  .video-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: flex-start;
+    text-align: center;
+  }
+  .video-icon {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .video-icon img {
+    margin: auto;
+  }
+  .video-area .video-play img {
+    height: 50rem;
+    object-position: center;
+  }
+  .featured-work-area .featured-work-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .customer-feedback-area .customer-feedback {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 3rem;
+  }
+  .featured-news-area .featured-news {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+  .single-featured-news-item:last-child {
+    grid-column: span 2;
+    width: 50%;
+    margin: auto;
+  }
+  .footer-area .footer-top-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+  }
+  .footer-area .footer-top-wrapper .single-recent-news .recent-news-wrapper {
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+}
+
+@media all and (max-width:880px) {
+  .our-services-area .our-services .services-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+  .single-service-item:last-child {
+    grid-column: span 2;
+    margin: auto;
+    width: 50%;
+  }
+}
+
+@media all and (max-width:760px) {
+  .banner-area .banner-wrapper {
+    padding: 13rem 0;
+  }
+  .banner-area .banner-wrapper h1 {
+    font-size: 4.4rem;
+  }
+  .contact-us-today-area .contact-us-today {
+    text-align: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .video-content {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .video-area .video-wrapper .video-content .single-video-c-item .video-text {
+    margin: auto;
+  }
+}
+
+
+@media all and (max-width:660px) {
+  .our-services-area .our-services .services-content {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 3rem;
+  }
+  .single-service-item:last-child {
+    grid-column: span 1;
+    margin: auto;
+    width: 100%;
+  }
+  .our-services-area .our-services .services-content .single-service-item {
+    margin: auto;
+    width: 76%;
+  }
+  .featured-work-area .featured-work-items {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .customer-feedback-area .company-partners {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-area .footer-top-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 4rem;
+  }
+  .footer-area .footer-bottom-bg .footer-bottom-text {
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+@media all and (max-width:560px) {
+  header .header-nav-wrapper .header-nav .menu a.bars {
+    display: block;
+  }
+  header .header-nav-wrapper .header-nav .menu ul {
+    display: none;
+  }
+  .customer-feedback-area .customer-feedback .single-feedback {
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+  }
+  .fun-fuct-area .fun-fact {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 0;
+  }
+  .job-section-area .job {
+    justify-content: center;
+    text-align: center;
+  }
+  .featured-news-area .featured-news {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 3rem;
+  }
+  .single-featured-news-item:last-child {
+    grid-column: span 1;
+    width: 100%;
+    margin: auto;
+  }
+}
+
+@media all and (max-width:480px) {
+  header .header-bg-wrapper .header-top {
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .banner-area .banner-wrapper h1 {
+    font-size: 3.7rem;
+  }
+  .banner-area .banner-wrapper {
+    text-align: center;
+  }
+  .section-title h1 {
+    font-size: 3.4rem;
+  }
+}
+
+@media all and (max-width:350px) {
+  .header-top-contact-info a {
+    display: block;
+    text-align: center;
+    margin: 0 0 1rem 0;
+  }
+  header .header-bg-wrapper .header-top .header-top-contact-info a:first-child {
+    margin-right: 0;
+  }
+  .featured-work-area .featured-work-items .single-featured-item .featured-item-hover-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .customer-feedback-area .company-partners {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .fun-fuct-area .fun-fact {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .footer-area .footer-bottom-bg .footer-bottom-text ul {
+    gap: 1.5rem;
+    justify-content: center;
+  }
+}
