@@ -1,5 +1,11 @@
 RewriteEngine On
 
+RewriteRule ^([^/\.]+)/([^/\.]+)?$ post_delete.php?type=$1&slug=$2 [NC,L]
+
+
+RewriteRule ^([^/\.]+)/([^/\.]+)?$ post_edit.php?type=$1&slug=$2 [NC,L]
+
+
 RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
 RewriteRule (.*) /%1 [R=302,L]  
 RewriteCond %{REQUEST_FILENAME}\.php -f

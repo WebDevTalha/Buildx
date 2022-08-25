@@ -23,8 +23,8 @@
             <div class="col-md-12">
                <div class="main-card mb-3 card">
                   <div class="card-body">
-                     <h5 class="card-title">Enter Category Name</h5>
-                     <form action="" method="POST" class="needs-validation" novalidate>
+                     <h5 class="card-title">Enter Article Details</h5>
+                     <form action="" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         <div class="form-row">
                               <div class="col-md-12 mb-3">
                                  <label for="validationCustom01">Article Title:</label>
@@ -67,19 +67,24 @@
                                        </div>
                                     </div>
                                  </div>
-                                 <div class="valid-feedback">
-                                    Looks good!
-                                 </div>
                               </div>
                         </div>
                         <div class="form-row">
+                           <?php
+                           $stm=$pdo->prepare("SELECT * FROM categories");
+                           $stm->execute(array());
+                           $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+                           ?>
                               <div class="col-md-12 mb-3">
-                                 <label for="validationCustom05">Article Title:</label>
-                                 <select name="catagory" id="validationCustom05" class="form-control">
-                                    <option value="">On Page Seo</option>
+                                 <label for="validationCustom05">Article Category:</label>
+                                 <select name="catagory" id="validationCustom05" class="form-control form-selcect" required aria-label="select example">
+                                    <option value="">Select Category</option>
+                                    <?php foreach($result as $row) :?>
+                                    <option value="<?php echo $row['slug']; ?>"><?php echo $row['name']; ?></option>
+                                    <?php endforeach; ?>
                                  </select>
-                                 <div class="valid-feedback">
-                                    Looks good!
+                                 <div class="invalid-feedback">
+                                    Select Category!
                                  </div>
                               </div>
                         </div>
@@ -93,7 +98,7 @@
                         <div class="form-row">
                               <div class="col-md-12 mb-3">
                                  <label for="validationCustom05">Article Status:</label>
-                                 <select name="catagory" id="validationCustom05" class="form-control">
+                                 <select name="status" id="validationCustom05" class="form-control">
                                     <option value="public">Public</option>
                                     <option value="draft">Draft</option>
                                  </select>
@@ -102,7 +107,7 @@
                                  </div>
                               </div>
                         </div>
-                        <button class="btn btn-primary" type="submit">Create Category</button>
+                        <button class="btn btn-primary" name="submit_article" type="submit">Create Article</button>
                      </form>
                      <script>
                         // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -190,3 +195,184 @@ var tagify = new Tagify(input, {
    }
 })
 </script>
+
+<?php
+
+if(isset($_POST['submit_article'])){
+   $title = $_POST['title'];
+   $slug = $_POST['slug'];
+   $content = $_POST['content'];
+   $thumbnail = $_FILES['thumbnail'];
+   $target_dir = "uploads/"; 
+   $catagory = $_POST['catagory'];
+   $tags = $_POST['tags'];
+   $status = $_POST['status'];
+
+   if(empty($title)){
+      echo '<script>
+      swal({
+         title: "",
+         text: "Title Is Requird!",
+         icon: "error",
+         button: "Try Again!",
+       });
+      </script>';
+   }
+   else if(empty($slug)){
+      echo '<script>
+      swal({
+         title: "",
+         text: "Slug Is Requird!",
+         icon: "error",
+         button: "Try Again!",
+       });
+      </script>';
+   }
+   else if(empty($content)){
+      echo '<script>
+      swal({
+         title: "",
+         text: "Content Is Requird!",
+         icon: "error",
+         button: "Try Again!",
+       });
+      </script>';
+   }
+   else if(empty($thumbnail['name'])){
+      echo '<script>
+      swal({
+         title: "",
+         text: "Thumbnail Is Requird!",
+         icon: "error",
+         button: "Try Again!",
+       });
+      </script>';
+   }
+   else if($catagory == ""){
+      echo '<script>
+      swal({
+         title: "",
+         text: "Category Is Requird!",
+         icon: "error",
+         button: "Try Again!",
+       });
+      </script>';
+   }
+   else if(empty($tags)){
+      echo '<script>
+      swal({
+         title: "",
+         text: "Tags Is Requird!",
+         icon: "error",
+         button: "Try Again!",
+       });
+      </script>';
+   }
+   else{
+
+      $stm=$pdo->prepare("SELECT slug FROM articles WHERE slug=?");
+      $stm->execute(array($slug));
+      $slug_count = $stm->rowCount();
+
+
+      if($slug_count == 0){
+         
+         // take photo extention
+         $size = $_FILES['thumbnail']['size'];
+         $temp_name = $_FILES["thumbnail"]["tmp_name"];
+         $target_file = $target_dir . basename($_FILES["thumbnail"]["name"]);
+         $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
+         // Photo Conditions
+         if($fileType != 'png' && $fileType != 'jpg'){
+               echo '<script>
+               swal({
+                  title: "",
+                  text: "photo must be png or jpg!",
+                  icon: "error",
+                  button: "Try Again!",
+               });
+               </script>';
+         }
+         elseif($size >= 5000000){
+               echo '<script>
+               swal({
+                  title: "",
+                  text: "Photo less then 5MB!",
+                  icon: "error",
+                  button: "Try Again!",
+               });
+               </script>';
+         }
+         else {
+            
+            // image same in file
+            $name_prefix = rand(99,999999999999);
+            $new_photo_name = $target_dir . $name_prefix . '.' . $fileType;
+
+
+            $upload = move_uploaded_file($temp_name, $new_photo_name);
+
+            $stm=$pdo->prepare("INSERT INTO articles(
+               title,
+               slug,
+               content,
+               thumbnail,
+               category,
+               tags,
+               status
+               ) VALUES(?,?,?,?,?,?,?)");
+            $insert = $stm->execute(array($title,$slug,$content,$new_photo_name,$catagory,$tags,$status));
+
+            if($insert == true){
+               if($status == "public"){
+                  echo '<script>
+                  swal({
+                     title: "Success",
+                     text: "Your Article Successfully Published!",
+                     icon: "success",
+                     button: "Ok",
+                  });
+                  </script>';
+               }
+               else if($status == "draft") {
+                  echo '<script>
+                  swal({
+                     title: "",
+                     text: "Your Article Saved to Draft!",
+                     icon: "success",
+                     button: "Ok",
+                  });
+                  </script>';
+               }
+               
+            }
+            else {
+               echo '<script>
+                  swal({
+                     title: "",
+                     text: "Your Article Faided To Published!",
+                     icon: "error",
+                     button: "Try Again!",
+                  });
+                  </script>';
+            }
+         }
+      }
+      else{
+         echo '<script>
+         swal({
+            title: "",
+            text: "Slug Is Already Used!",
+            icon: "error",
+            button: "Try Again",
+         });
+         </script>';
+      }
+      
+   }
+
+}
+
+?>

@@ -9,6 +9,7 @@
 .single-blog-item{
    cursor: pointer;
    position: relative;
+   height: 100%;
 }
 .status span {
     position: absolute;
@@ -136,116 +137,39 @@
                   <div class="card-body">
                      <h5 class="card-title">Blog Articles</h5>
                      <div class="blog-wrapper">
+                        <?php
+                        $stm=$pdo->prepare("SELECT * FROM articles");
+                        $stm->execute(array());
+                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+                        foreach($result as $row) :
+                        ?>
                         <!-- Single Box -->
                         <div class="card">
                            <div class="card-body">
                               <div class="single-blog-item">
                                  <div class="status">
+                                    <?php if($row['status'] == "public") :?>
                                     <span class="badge badge-info">Publish</span>
-                                 </div>
-                                 <div class="blog-actions">
-                                    <a href="#" class="btn btn-info">Edit</a>
-                                    <a href="#" class="btn btn-primary">View</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                                 </div>
-                                 <div class="service-image">
-                                    <img src="../assets/image/services/service-item1.jpg" alt="Service-image">
-                                 </div>
-                                 <div class="service-item-content">
-                                    <h4><a href="#">Renovations</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- Single Box -->
-                        <div class="card">
-                           <div class="card-body">
-                              <div class="single-blog-item">
-                                 <div class="status">
-                                    <span class="badge badge-info">Publish</span>
-                                 </div>
-                                 <div class="blog-actions">
-                                    <a href="#" class="btn btn-info">Edit</a>
-                                    <a href="#" class="btn btn-primary">View</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                                 </div>
-                                 <div class="service-image">
-                                    <img src="../assets/image/services/service-item1.jpg" alt="Service-image">
-                                 </div>
-                                 <div class="service-item-content">
-                                    <h4><a href="#">Renovations</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- Single Box -->
-                        <div class="card">
-                           <div class="card-body">
-                              <div class="single-blog-item">
-                                 <div class="status">
-                                    <span class="badge badge-info">Publish</span>
-                                 </div>
-                                 <div class="blog-actions">
-                                    <a href="#" class="btn btn-info">Edit</a>
-                                    <a href="#" class="btn btn-primary">View</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                                 </div>
-                                 <div class="service-image">
-                                    <img src="../assets/image/services/service-item1.jpg" alt="Service-image">
-                                 </div>
-                                 <div class="service-item-content">
-                                    <h4><a href="#">Renovations</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- Single Box -->
-                        <div class="card">
-                           <div class="card-body">
-                              <div class="single-blog-item">
-                                 <div class="status">
-                                    <span class="badge badge-info">Publish</span>
-                                 </div>
-                                 <div class="blog-actions">
-                                    <a href="#" class="btn btn-info">Edit</a>
-                                    <a href="#" class="btn btn-primary">View</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                                 </div>
-                                 <div class="service-image">
-                                    <img src="../assets/image/services/service-item1.jpg" alt="Service-image">
-                                 </div>
-                                 <div class="service-item-content">
-                                    <h4><a href="#">Renovations</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- Single Box -->
-                        <div class="card">
-                           <div class="card-body">
-                              <div class="single-blog-item">
-                                 <div class="status">
+                                    <?php elseif($row['status'] == "draft") :?>
                                     <span class="badge badge-warning">Draft</span>
+                                    <?php endif; ?>
                                  </div>
                                  <div class="blog-actions">
                                     <a href="#" class="btn btn-info">Edit</a>
                                     <a href="#" class="btn btn-primary">View</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
+                                    <a href="post_delete/<?php echo $row['slug']; ?>" class="btn btn-danger">Delete</a>
                                  </div>
                                  <div class="service-image">
-                                    <img src="../assets/image/services/service-item1.jpg" alt="Service-image">
+                                    <img src="<?php echo $row['thumbnail']; ?>" alt="Post Image">
                                  </div>
                                  <div class="service-item-content">
-                                    <h4><a href="#">Renovations</a></h4>
-                                    <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
+                                    <h4><a href="#"><?php echo $row['title']; ?></a></h4>
+                                    <div><?php echo $row['content']; ?></div>
                                  </div>
                               </div>
                            </div>
                         </div>
+                        <?php endforeach; ?>
                      </div>
                   </div>
                </div>
