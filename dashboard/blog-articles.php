@@ -155,9 +155,9 @@
                                     <?php endif; ?>
                                  </div>
                                  <div class="blog-actions">
-                                    <a href="#" class="btn btn-info">Edit</a>
+                                    <a href="edit/<?php echo $row['slug']; ?>" class="btn btn-info">Edit</a>
                                     <a href="#" class="btn btn-primary">View</a>
-                                    <a href="post_delete/<?php echo $row['slug']; ?>" class="btn btn-danger">Delete</a>
+                                    <a href="delete/<?php echo $row['slug']; ?>" class="btn btn-danger">Delete</a>
                                  </div>
                                  <div class="service-image">
                                     <img src="<?php echo $row['thumbnail']; ?>" alt="Post Image">

@@ -1,55 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/dist/css/style.css">
-  <link rel="stylesheet" href="assets/css/dist/css/responsive.css">
-  <script src="https://kit.fontawesome.com/51f9c8d173.js" crossorigin="anonymous"></script>
-  <link rel="icon" href="assets/image/favicon.png">
-  <title>BUILDX</title>
-</head>
-<body>
-  <!-- Start header Area -->
-  <header>
-    <!-- Header Top -->
-    <div class="header-bg-wrapper">
-      <div class="container">
-        <div class="header-top">
-          <div class="header-top-text">
-            <p>Have any question?</p>
-          </div>
-          <div class="header-top-contact-info">
-            <a href="mailto:abut7270@gmail.com" title="Send Mail"><i class="fa-solid fa-envelope"></i> contact@mail.com</a>
-            <a href="tel:01575561781" title="Make A Call"><i class="fa-solid fa-phone"></i> +080 0444 333 444</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Header Nav -->
-    <div class="header-nav-wrapper">
-      <div class="container">
-        <div class="header-nav">
-          <div class="logo">
-            <a href="index.html"><img src="assets/image/logo.png" alt="logo"></a>
-          </div>
-          <nav class="menu">
-            <a class="bars" href="#"><i class="fa-solid fa-bars"></i></a>
-            <ul>
-              <li><a class="active" href="#">About</a></li>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Project</a></li>
-              <li><a href="#">Pages</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </header>
-  <!-- End Header Area -->
+<?php require_once('header.php'); ?>
+<style>
+  .see-all-btn a {
+    padding: 1.4rem 3.5rem;
+    background-color: #fab702;
+    color: #fff;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+.see-all-btn {
+    text-align: center;
+    margin-top: 7rem;
+}
+
+.see-all-btn a:hover {
+    background: #3b404f;
+}
+</style>
 
   <!-- Start Banner Section Area -->
   <section class="banner-area">
@@ -88,39 +55,28 @@
         </div>
         <!-- Content -->
         <div class="services-content">
+
+        <?php
+        $service = "our-services";
+        $stm=$pdo->prepare("SELECT * FROM articles WHERE category=? LIMIT 0,3");
+        $stm->execute(array($service));
+        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($result as $row):
+        ?>
+
           <!-- Single Box -->
           <div class="single-service-item">
             <div class="service-image">
-              <img src="assets/image/services/service-item1.jpg" alt="Service-image">
+              <img src="dashboard/<?php echo $row['thumbnail']; ?>" alt="Service-image">
             </div>
             <div class="service-item-content">
-              <h4><a href="#">Renovations</a></h4>
-              <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
+              <h4><a href="#"><?php echo $row['title']; ?></a></h4>
+              <div><?php echo $row['content']; ?></div>
               <a class="ssia" href="#">READ MORE</a>
             </div>
           </div>
-          <!-- Single Box -->
-          <div class="single-service-item">
-            <div class="service-image">
-              <img src="assets/image/services/service-item2.jpg" alt="Service-image">
-            </div>
-            <div class="service-item-content">
-              <h4><a href="#">Consulting</a></h4>
-              <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-              <a class="ssia" href="#">READ MORE</a>
-            </div>
-          </div>
-          <!-- Single Box -->
-          <div class="single-service-item">
-            <div class="service-image">
-              <img src="assets/image/services/service-item3.jpg" alt="Service-image">
-            </div>
-            <div class="service-item-content">
-              <h4><a href="#">Smart houses</a></h4>
-              <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-              <a class="ssia" href="#">READ MORE</a>
-            </div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
@@ -172,113 +128,6 @@
   </section>
   <!-- End Video Section Area -->
 
-  <!-- Start Featured Work Section Area -->
-  <section class="featured-work-area section-padding">
-    <div class="container">
-      <!-- Section Title -->
-      <div class="section-title">
-        <h1>Featured Works</h1>
-        <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cu, laboramus definiebas cum et. Duo id omnis persequeris neglegentur, facete commodo ea usu, possit lucilius sed ei. Esse efficiendi scripserit eos ex. Sea utamur iisque salutatus id.Mel autem animal.</p>
-      </div>
-      <!-- buttons -->
-      <div class="featured-btn">
-        <ul>
-          <li>All</li>
-          <li class="active">Green Building</li>
-          <li>Healthcare</li>
-          <li>Interior Design</li>
-          <li>Office</li>
-        </ul>
-      </div>
-    </div>
-    <div class="featured-work-items">
-      <!-- Single Item -->
-      <div class="single-featured-item">
-        <img src="assets/image/featured-work/1.jpg" alt="image">
-        <div class="featured-item-hover-content">
-          <div class="f-content-title">
-            <h4><a href="#">ARCHITECTURE AND DESIGN</a></h4>
-            <span></span>
-          </div>
-          <div class="f-content-icons">
-            <a href="#"><i class="fa-solid fa-plus"></i></a>
-            <a href="#"><i class="fa-solid fa-link"></i></a>
-          </div>
-        </div>
-      </div>
-      <!-- Single Item -->
-      <div class="single-featured-item">
-        <img src="assets/image/featured-work/2.jpg" alt="image">
-        <div class="featured-item-hover-content">
-          <div class="f-content-title">
-            <h4><a href="#">ARCHITECTURE AND DESIGN</a></h4>
-            <span></span>
-          </div>
-          <div class="f-content-icons">
-            <a href="#"><i class="fa-solid fa-plus"></i></a>
-            <a href="#"><i class="fa-solid fa-link"></i></a>
-          </div>
-        </div>
-      </div>
-      <!-- Single Item -->
-      <div class="single-featured-item">
-        <img src="assets/image/featured-work/3.jpg" alt="image">
-        <div class="featured-item-hover-content">
-          <div class="f-content-title">
-            <h4><a href="#">ARCHITECTURE AND DESIGN</a></h4>
-            <span></span>
-          </div>
-          <div class="f-content-icons">
-            <a href="#"><i class="fa-solid fa-plus"></i></a>
-            <a href="#"><i class="fa-solid fa-link"></i></a>
-          </div>
-        </div>
-      </div>
-      <!-- Single Item -->
-      <div class="single-featured-item">
-        <img src="assets/image/featured-work/4.jpg" alt="image">
-        <div class="featured-item-hover-content">
-          <div class="f-content-title">
-            <h4><a href="#">ARCHITECTURE AND DESIGN</a></h4>
-            <span></span>
-          </div>
-          <div class="f-content-icons">
-            <a href="#"><i class="fa-solid fa-plus"></i></a>
-            <a href="#"><i class="fa-solid fa-link"></i></a>
-          </div>
-        </div>
-      </div>
-      <!-- Single Item -->
-      <div class="single-featured-item">
-        <img src="assets/image/featured-work/5.jpg" alt="image">
-        <div class="featured-item-hover-content">
-          <div class="f-content-title">
-            <h4><a href="#">ARCHITECTURE AND DESIGN</a></h4>
-            <span></span>
-          </div>
-          <div class="f-content-icons">
-            <a href="#"><i class="fa-solid fa-plus"></i></a>
-            <a href="#"><i class="fa-solid fa-link"></i></a>
-          </div>
-        </div>
-      </div>
-      <!-- Single Item -->
-      <div class="single-featured-item">
-        <img src="assets/image/featured-work/6.jpg" alt="image">
-        <div class="featured-item-hover-content">
-          <div class="f-content-title">
-            <h4><a href="#">ARCHITECTURE AND DESIGN</a></h4>
-            <span></span>
-          </div>
-          <div class="f-content-icons">
-            <a href="#"><i class="fa-solid fa-plus"></i></a>
-            <a href="#"><i class="fa-solid fa-link"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End Featured Work Section Area -->
 
   <!-- Start Customer Feedback Area -->
   <section class="customer-feedback-area section-padding">
@@ -387,149 +236,35 @@
       </div>
       <!-- Content -->
       <div class="featured-news">
+
+        <?php
+        $category = "our-featured-news";
+        $stm=$pdo->prepare("SELECT * FROM articles WHERE category=? LIMIT 0,3");
+        $stm->execute(array($category));
+        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($result as $row):
+        ?>
         <!-- Single Item -->
         <div class="single-featured-news-item">
           <div class="f-news-image">
-            <img src="assets/image/featured-news/1.jpg" alt="News">
+            <img src="dashboard/<?php echo $row['thumbnail']; ?>" alt="News">
           </div>
           <div class="f-news-content">
-            <h4><a href="#">Construction Forklift 
-              Buyers Guide
-              </a></h4>
-            <span><i class="fa-regular fa-calendar"></i> 12 DECEMBER 2018</span>
-            <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
+            <h4><a href="#"><?php echo $row['title']; ?></a></h4>
+            <span><i class="fa-regular fa-calendar"></i> &nbsp; <?php echo getMonthName($row['created_at']); ?></span>
+            <div><?php echo $row['content']; ?></div>
             <a class="fncb" href="#">READ MORE</a>
           </div>
         </div>
-        <!-- Single Item -->
-        <div class="single-featured-news-item">
-          <div class="f-news-image">
-            <img src="assets/image/featured-news/2.jpg" alt="News">
-          </div>
-          <div class="f-news-content">
-            <h4><a href="#">How to plan for your 
-              dream house?</a></h4>
-            <span><i class="fa-regular fa-calendar"></i> 12 DECEMBER 2018</span>
-            <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-            <a class="fncb" href="#">READ MORE</a>
-          </div>
-        </div>
-        <!-- Single Item -->
-        <div class="single-featured-news-item">
-          <div class="f-news-image">
-            <img src="assets/image/featured-news/3.jpg" alt="News">
-          </div>
-          <div class="f-news-content">
-            <h4><a href="#">Builder of human 
-              happiness for all time</a></h4>
-            <span><i class="fa-regular fa-calendar"></i> 12 DECEMBER 2018</span>
-            <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
-            <a class="fncb" href="#">READ MORE</a>
-          </div>
-        </div>
+        <?php endforeach; ?>
       </div>
+      <!-- See All btn -->
+      <!-- <div class="see-all-btn">
+        <a href="#">See All</a>
+      </div> -->
     </div>
   </section>
   <!-- End Featured News Section Area -->
 
-  <!-- Start Footer Area -->
-  <footer class="footer-area section-padding pb-0">
-    <div class="container">
-      <div class="footer-top-wrapper">
-        <!-- Single Item -->
-        <div class="single-recent-posts sfb">
-          <h4>Recent Posts</h4>
-          <ul>
-            <li><a href="#"><i class="fa-solid fa-angles-right"></i> How you can impact your customers.</a></li>
-            <li><a href="#"><i class="fa-solid fa-angles-right"></i> Construction is all about quality.</a></li>
-            <li><a href="#"><i class="fa-solid fa-angles-right"></i> Is your website user friendly?</a></li>
-            <li><a href="#"><i class="fa-solid fa-angles-right"></i> HUGE offers weekly updates & more.</a></li>
-            <li><a href="#"><i class="fa-solid fa-angles-right"></i> Your customers should love your web.</a></li>
-          </ul>
-        </div>
-        <!-- Single Item -->
-        <div class="single-recent-news sfb">
-          <h4>Recent News</h4>
-          <!-- Songle Footer Inner item -->
-          <div class="recent-news-wrapper">
-            <div class="r-n-wrapper-image">
-              <img src="assets/image/footer/1.jpg" alt="image">
-            </div>
-            <div class="r-n-wrapper-text">
-              <a href="#">A Clean Website Gives More Experience To The Visitors</a>
-              <span>Dec 12 - 2018</span>
-            </div>
-          </div>
-          <!-- Songle Footer Inner item -->
-          <div class="recent-news-wrapper">
-            <div class="r-n-wrapper-image">
-              <img src="assets/image/footer/2.jpg" alt="image">
-            </div>
-            <div class="r-n-wrapper-text">
-              <a href="#">A Clean Website Gives More Experience To The Visitors</a>
-              <span>Dec 12 - 2018</span>
-            </div>
-          </div>
-        </div>
-        <!-- Single Item -->
-        <div class="single-recent-news sfb">
-          <h4>Contact Info</h4>
-          <div class="contact-info-item cii1">
-            <a href="#"><i class="fa-solid fa-envelope"></i> hello@contact.com</a>
-          </div>
-          <div class="contact-info-item cii2">
-            <div class="cii-icon">
-              <a href="#"><i class="fa-solid fa-phone"></i></a>
-            </div>
-            <div class="cii-text">
-              <a href="#">P: 3333 222 1111</a><br>
-              <a href="#">F: 3333 222 1111</a>
-            </div>
-          </div>
-          <div class="contact-info-item cii3">
-            <div class="cii-icon">
-              <a href="#"><i class="fa-solid fa-location-dot"></i></a>
-            </div>
-            <div class="cii-text">
-              <a href="#">99 Barnard St - Suite 111</a>
-              <a href="#">United States - GA 22222</a>
-            </div>
-          </div>
-          <div class="contact-info-item cii4">
-            <a href="#"><i class="fa-brands fa-facebook-square"></i></a>            
-            <a href="#"><i class="fa-brands fa-skype"></i></a>            
-            <a href="#"><i class="fa-brands fa-pinterest-square"></i></a>            
-          </div>          
-        </div>
-        <!-- Single Item -->
-        <div class="single-contact-info sfb">
-          <h4>Mailing List</h4>
-          <p>Enter your email address  for our mailing list to keep yourself updated.</p>
-          <form action="" method="get">
-            <input type="email" name="email" required>
-            <button type="submit">Done</button>
-          </form>
-          <span>We Respect Your Privacy</span>
-        </div>
-      </div>      
-    </div>
-    <div class="footer-bottom-bg">
-      <div class="container">
-        <!-- Footer Bottom -->
-        <div class="footer-bottom-text">
-          <p>&copy; Copyright All Rights Reserved Talha</p>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- End Footer Area -->
-</body>
-</html>
+  <?php require_once('footer.php'); ?>

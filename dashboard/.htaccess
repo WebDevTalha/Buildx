@@ -1,9 +1,20 @@
 RewriteEngine On
 
-RewriteRule ^([^/\.]+)/([^/\.]+)?$ post_delete.php?type=$1&slug=$2 [NC,L]
+# RewriteCond %(REQUEST_FILENAME) !-f
+# RewriteCond %(REQUEST_FILENAME) !-d
+# RewriteRule ^delete/([a-z0-9]+)$ /post_delete.php?slug=$1 [N]
+# RewriteRule ^edit/([a-z0-9]+)$ /post_edit.php?page=$1 [L]
 
+# RewriteCond %(REQUEST_FILENAME) !-f
+# RewriteCond %(REQUEST_FILENAME) !-d
+# RewriteRule ^([^/\.]+)/([^/\.]+)?$ action.php?type=delete&slug=$2 [L]
 
-RewriteRule ^([^/\.]+)/([^/\.]+)?$ post_edit.php?type=$1&slug=$2 [NC,L]
+# RewriteCond %(REQUEST_FILENAME) !-f
+# RewriteCond %(REQUEST_FILENAME) !-d
+# RewriteRule ^([^/\.]+)/([^/\.]+)?$ post_edit.php?type=edit&slug=$2 [L]
+
+RewriteRule ^([^/\.]+)/([^/\.]+)?$ action.php?type=$1&slug=$2 [NC,L]
+
 
 
 RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
