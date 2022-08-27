@@ -6,11 +6,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/dist/css/style.css">
-  <link rel="stylesheet" href="assets/css/dist/css/responsive.css">
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/dist/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dist/css/responsive.css">
   <script src="https://kit.fontawesome.com/51f9c8d173.js" crossorigin="anonymous"></script>
-  <link rel="icon" href="assets/image/favicon.png">
+  <link rel="icon" href="../assets/image/favicon.png">
   <title>BUILDX</title>
   <style>
    .service-item-content p {
@@ -38,6 +38,75 @@
     text-overflow: ellipsis;
 }
   </style>
+  
+<style>
+   .tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.article-category a {
+    color: #0079e4;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: .5rem;
+}
+
+.article-title h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #686767;
+}
+
+.article-image {
+    width: 100%;
+    height: 48rem;
+    margin-bottom: 3rem;
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-content.p-3 p {
+    color: #8d8888;
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+}.article-category a {
+    color: #0079e4;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: .5rem;
+}
+
+.article-title h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #686767;
+}
+
+.article-image {
+    width: 100%;
+    height: 48rem;
+    margin-bottom: 3rem;
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-content.p-3 p {
+    color: #8d8888;
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+}
+</style>
 </head>
 <body>
   <!-- Start header Area -->
@@ -61,7 +130,7 @@
       <div class="container">
         <div class="header-nav">
           <div class="logo">
-            <a href="index"><img src="assets/image/logo.png" alt="logo"></a>
+            <a href="../index"><img src="../assets/image/logo.png" alt="logo"></a>
           </div>
           <nav class="menu">
             <a class="bars" href="#"><i class="fa-solid fa-bars"></i></a>
@@ -70,8 +139,8 @@
             $hi = basename($_SERVER["SCRIPT_FILENAME"], '.php');
             ?>
             <ul>
-              <li><a class="<?php if($hi == "index"){echo "active";} ?>" href="index">Home</a></li>
-              <li><a class="<?php if($hi == "blogs"){echo "active";} ?>" href="blogs">Blogs</a></li>
+              <li><a class="<?php if($hi == "index"){echo "active";} ?>" href="../index">Home</a></li>
+              <li><a class="<?php if($hi == "blogs"){echo "active";} ?>" href="../blogs">Blogs</a></li>
               <li><a href="#">About</a></li>
               <li><a href="#">Contact</a></li>
               <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></li>

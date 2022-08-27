@@ -68,12 +68,12 @@
           <!-- Single Box -->
           <div class="single-service-item">
             <div class="service-image">
-              <img src="dashboard/<?php echo $row['thumbnail']; ?>" alt="Service-image">
+                <img src="dashboard/<?php echo $row['thumbnail']; ?>" alt="Service-image">
             </div>
             <div class="service-item-content">
-              <h4><a href="#"><?php echo $row['title']; ?></a></h4>
+              <h4><a href="blog/<?php echo $row['slug']; ?>"><?php echo $row['title']; ?></a></h4>
               <div><?php echo $row['content']; ?></div>
-              <a class="ssia" href="#">READ MORE</a>
+              <a class="ssia" href="blog/<?php echo $row['slug']; ?>">READ MORE</a>
             </div>
           </div>
           <?php endforeach; ?>
@@ -251,10 +251,10 @@
             <img src="dashboard/<?php echo $row['thumbnail']; ?>" alt="News">
           </div>
           <div class="f-news-content">
-            <h4><a href="#"><?php echo $row['title']; ?></a></h4>
+            <h4><a href="blog/<?php echo $row['slug']; ?>"><?php echo $row['title']; ?></a></h4>
             <span><i class="fa-regular fa-calendar"></i> &nbsp; <?php echo getMonthName($row['created_at']); ?></span>
             <div><?php echo $row['content']; ?></div>
-            <a class="fncb" href="#">READ MORE</a>
+            <a class="fncb" href="blog/<?php echo $row['slug']; ?>">READ MORE</a>
           </div>
         </div>
         <?php endforeach; ?>

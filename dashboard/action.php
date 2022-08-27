@@ -12,7 +12,7 @@ if(isset($_GET['type']) && isset($_GET['slug'])){
    $slug = "";
    $type = "";
 }
-echo $type."<br>";
+
 if($type == 'delete'){
    $stm = $pdo->prepare("DELETE FROM articles WHERE slug=?");
    $stm->execute(array($slug));
@@ -441,17 +441,6 @@ if(isset($_POST['submit_article'])){
 
 ?>
 <?php else : ?>
-   <!DOCTYPE html>
-   <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Undifind</title>
-   </head>
-   <body>
-
-
    
    <script src="../assets/scripts/sweetalert.min.js"></script>
    <script>
@@ -462,6 +451,4 @@ if(isset($_POST['submit_article'])){
          buttons: false,
          });
    </script>
-   </body>
-   </html>
 <?php endif; ?>

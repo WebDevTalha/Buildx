@@ -85,7 +85,7 @@
                <div class="blog-content-wrap h-100">
                   <div class="d-flex flex-column justify-content-center align-items-start h-100 p-5">
                      <div class="category mb-3"><a href="category/<?php echo $row['category']; ?>"><?php echo getCategoryName($row['category']); ?></a></div>
-                     <div class="title mb-3"><a href="<?php echo $row['slug']; ?>"><?php echo $row['title']; ?></a></div>
+                     <div class="title mb-3"><a href="blog/<?php echo $row['slug']; ?>"><?php echo $row['title']; ?></a></div>
                      <div class="content"><?php echo $row['content']; ?></div>
                   </div>
                </div>

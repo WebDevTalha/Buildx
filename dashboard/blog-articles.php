@@ -138,7 +138,7 @@
                      <h5 class="card-title">Blog Articles</h5>
                      <div class="blog-wrapper">
                         <?php
-                        $stm=$pdo->prepare("SELECT * FROM articles");
+                        $stm=$pdo->prepare("SELECT * FROM articles ORDER BY id DESC");
                         $stm->execute(array());
                         $result = $stm->fetchAll(PDO::FETCH_ASSOC);
                         foreach($result as $row) :
