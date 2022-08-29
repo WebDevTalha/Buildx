@@ -1,5 +1,9 @@
 <?php require_once('config.php') ?>
 <?php require_once('functions.php') ?>
+<?php 
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +40,48 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.profile {
+    width: 4rem;
+    height: 4rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.profile span {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #27df27;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+}
+.dropdown-profile {
+    position: absolute;
+    top: 5rem;
+    right: 0;
+    width: 16rem;
+    border: 1px solid #eee;
+    border-radius: 1rem;
+    background: #fff;
+    padding: .5rem 1rem 1rem 0;
+    display: none;
+}
+.dropdown-profile ul {
+    flex-direction: column;
+    gap: 0 !important;
+}
+.dropdown-profile ul li {
+    margin: 0 !important;
+    padding: 1rem 0 .2rem 0;
+    width: 100%;
+}
+
+.dropdown-profile ul li a {
+    display: block;
+    width: 100%;
 }
   </style>
 </head>
@@ -74,7 +120,24 @@
               <li><a class="<?php if($hi == "blogs"){echo "active";} ?>" href="blogs">Blogs</a></li>
               <li><a href="#">About</a></li>
               <li><a href="#">Contact</a></li>
-              <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+              <?php if(isset($_SESSION['b_user_loggedin'])) : ?>
+              <li>
+                <div class="profile">
+                  <img src="uploads/user.png" alt="iser">
+                  <span></span>
+                  <div class="dropdown-profile">
+                    <ul>
+                      <li><a href="#">Profile</a></li>
+                      <li><a href="#">Settings</a></li>
+                      <li><a href="#">Help And Support</a></li>
+                      <li><a href="logout">Logout</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <?php elseif(!isset($_SESSION['b_user_loggedin'])) : ?>
+              <li><a class="btn btn-warning btn-lg text-white" href="login">Login</a></li>
+              <?php endif; ?>
             </ul>
           </nav>
         </div>
