@@ -168,9 +168,34 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
       <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cu, laboramus definiebas cum et. Duo id omnis persequeris neglegentur, facete commodo ea usu, possit lucilius sed ei. Esse efficiendi scripserit eos ex. Sea utamur iisque salutatus id.Mel autem animal.</p>
    </div>
    <?php
+
+   
+   $per_page = 5;
+   $start = 0;
+   $current_page = 1;
+
+   if(isset($_GET['page'])){
+      $start = $_GET['page'];
+      if($start<=0){
+         $start = 0;
+         $current_page = 1;
+      } else {
+         $current_page = $start;
+         $start--;
+         $start = $start*$per_page;
+      }
+   }
+
    $status = "public";
-   $stm=$pdo->prepare("SELECT * FROM articles WHERE category=? LIMIT 0,5");
-   $stm->execute(array($slug));
+
+   $stm2 = $pdo->prepare("SELECT * FROM articles WHERE category=? AND status=?");
+   $stm2->execute(array($slug,$status));
+   $record = $stm2->rowCount();
+   $pagi = ceil($record/$per_page);
+
+
+   $stm=$pdo->prepare("SELECT * FROM articles WHERE category=? AND status=? ORDER BY id DESC LIMIT $start,$per_page");
+   $stm->execute(array($slug,$status));
    $result = $stm->fetchAll(PDO::FETCH_ASSOC);
 
    foreach($result as $row):
@@ -197,11 +222,20 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
    <?php endforeach; ?>
 
    <ul class="pagination pagination-lg mt-5 justify-content-center">
-      <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a> </li>
-      <li class="page-item"><a class="page-link" href="#">2</a> </li>
-      <li class="page-item"><a class="page-link" href="#">3</a> </li>
-      <li class="page-item"><a class="page-link" href="#">4</a> </li>
-      <li class="page-item"><a class="page-link" href="#">5</a> </li>
+      <?php
+      $class = '';
+      for($i=1; $i<=$pagi; $i++) :
+         if($current_page == $i){
+            $class = 'active';
+         }
+      ?>
+         <?php if($current_page == $i) :?>
+            <li class="page-item <?php echo $class; ?>"><a class="page-link" href="javascript:void(0)"><?php echo $i; ?></a> </li>
+         <?php else : ?>
+            <li class="page-item"><a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a> </li>
+         <?php endif; ?>
+
+      <?php endfor; ?>
    </ul>
    </div>
 </section>
