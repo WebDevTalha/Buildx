@@ -49,7 +49,117 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                   <img src="../dashboard/<?php echo $result2[0]['thumbnail']; ?>" alt="">
                </div>
                <div class="article-content p-3"><?php echo $result2[0]['content']; ?></div>
-               <div class="article-comments"></div>
+               <div class="comment-title"><h3>Comments</h3></div>
+               <div class="spacer"></div>
+               <div class="article-comments">
+                  <div class="wrapper-comments">
+                     <ul>
+                     <?php
+                     $stm3=$pdo->prepare("SELECT * FROM comments WHERE post_id=?");
+                     $stm3->execute(array($result2[0]['id']));
+                     $comment_count = $stm3->rowCount();
+                     $result3 = $stm3->fetchAll(PDO::FETCH_ASSOC);
+                     $i = 1;
+                     $ii = 50;
+                     ?>
+                     <?php if($comment_count != 0) :?>
+                     <?php foreach($result3 as $comment_row) : ?>
+
+                     <?php
+                     $stm4=$pdo->prepare("SELECT * FROM replays WHERE comment_id=?");
+                     $stm4->execute(array($comment_row['id']));
+                     $comment_replay_count = $stm4->rowCount();
+                     $result4 = $stm4->fetchAll(PDO::FETCH_ASSOC);
+                     ?>
+                        <li class="mb-5">
+                           <div class="commenter">
+                              <input type="hidden" id="getCountBtn" value="<?php echo $comment_count; ?>">
+                              <?php if($comment_replay_count != 0) : ?>
+                              <div class="replay-line"></div>
+                              <?php endif; ?>
+                              <div class="comm-profile">
+                                 <div class="image">
+                                    <a href="#"><img src="../uploads/user.png" alt="user"></a>
+                                 </div>
+                              </div>
+                              <div class="comment-text">
+                                 <div class="comm-name">
+                                    <a href="#"><?php echo getUserData('username',$comment_row['user_id']); ?></a>
+                                 </div>
+                                 <p><?php echo $comment_row['content']; ?></p>
+                                 <div class="comment-replay-btn-area">
+                                    <p class="replay-comment-btn">Replay</p>
+                                    <div class="commented-at"><?php echo getMonthName($comment_row['created_at']); ?></div>
+                                 </div>
+                              </div>
+                              <div class="comment-report">
+                                 <p href="#" class="report-comment-btn_<?php echo $i; ?>"><i class="fa-solid fa-ellipsis"></i></p>
+                                 <style>
+                                    .report-btns-wrapper_<?php echo $i; ?> {
+                                       display: none;
+                                    }
+                                 </style>
+                                 <div class="report-btns-wrapper_<?php echo $i; ?>">
+                                    <div class="report-btns">
+                                       <span id="report-send-btn_<?php echo $i; ?>">Report This Comment</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           
+                           <?php if($comment_replay_count != 0) : ?>
+                           <?php foreach($result4 as $comment_replay_row) : ?>
+                           <div class="comment-replay">
+                              <div class="replay-commenter commenter">
+                                 <div class="comment-replay-line"></div>
+                                 <div class="comm-profile">
+                                    <div class="image">
+                                       <a href="#"><img src="../uploads/user.png" alt="user"></a>
+                                    </div>
+                                 </div>
+                                 <div class="comment-text">
+                                    <div class="comm-name">
+                                       <a href="#"><?php echo getUserData('username',$comment_replay_row['user_id']); ?></a>
+                                    </div>
+                                    <p><?php echo $comment_replay_row['content']; ?></p>
+                                 </div>
+                                 <div class="comment-report">
+                                    <p href="#" class="report-comment-replay-btn_<?php echo $i; ?>"><i class="fa-solid fa-ellipsis"></i></p>
+                                    <style>
+                                       .report-replay-btns-wrapper_<?php echo $i; ?> {
+                                          display: none;
+                                       }
+                                    </style>
+                                    <div class="report-replay-btns-wrapper_<?php echo $i; ?>">
+                                       <div class="report-btns">
+                                          <span id="report-replay-send-btn_<?php echo $i; ?>">Report This Comment</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <?php endforeach; ?>
+                           <?php endif; ?>
+                        </li>
+                        <?php $i++; endforeach; ?>
+                        <?php else : ?>
+                        <li>
+                           <div class="no-comments">No Comments On This Article</div>
+                        </li>
+                        <?php endif; ?>
+                     </ul>
+                  </div>
+               </div>
+               <div class="spacer"></div>
+               <div class="comment-form">
+                  <form action="" method="POST">
+                     <input type="hidden" name="user_id" value="<?php if(isset($_SESSION['b_user_loggedin'])){echo $_SESSION['b_user_loggedin'][0]['id'];} ?>">
+                     <input type="hidden" name="post_id" value="<?php echo $result2[0]['id']; ?>">
+                     <textarea name="comment" placeholder="Max 200 Character Letter" class="form-control comment-box mb-4" cols="30" rows="5" onkeyup="countChar(this)"></textarea>
+                     <span id="charNum" class="text-warning">200 Character Left</span><br><br>
+                     <input type="submit" name="comment_btn" value="Comment" class="<?php if(!isset($_SESSION['b_user_loggedin'])){echo "comment_btn";} ?> btn btn-warning btn-lg">
+                  </form>
+               </div>
             </div>
          </div>
          <div class="col-md-3 p-3">
@@ -243,3 +353,124 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
 
 
 <?php require_once('action_footer.php') ?>
+
+<script>
+   $(document).ready(function(){
+      let countBtn = $('#getCountBtn').val();
+      for(let i = 1; i <= countBtn; i++){
+         // $('.report-btns-wrapper_'+i).hide();
+         $('.report-comment-btn_'+i).click(function(){
+            $('.report-btns-wrapper_'+i).toggle();
+         });
+
+         $('#report-send-btn_'+i).click(function(){
+            swal({
+               title: "Are you sure?",
+               text: "You Want To Report This Comment!",
+               icon: "warning",
+               buttons: true,
+               dangerMode: true,
+               }).then((willDelete) => {
+               if (willDelete) {
+                  swal("Report Send Successfully!", {
+                     icon: "success",
+                  });
+               } else {
+                  swal("Your Report Not Send!");
+               }
+            });
+         });
+      }
+
+      for(let ii = 1; ii <= countBtn; ii++){
+         console.log(ii);
+         // $('.report-btns-wrapper_'+i).hide();
+         $('.report-comment-replay-btn_'+ii).click(function(){
+            $('.report-replay-btns-wrapper_'+ii).toggle();
+         });
+
+         $('#report-replay-send-btn_'+ii).click(function(){
+            swal({
+               title: "Are you sure?",
+               text: "You Want To Report This Comment!",
+               icon: "warning",
+               buttons: true,
+               dangerMode: true,
+               }).then((willDelete) => {
+               if (willDelete) {
+                  swal("Report Send Successfully!", {
+                     icon: "success",
+                  });
+               } else {
+                  swal("Your Report Not Send!");
+               }
+            });
+         });
+      }
+
+   });
+</script>
+<script>
+   $(document).ready(function(){
+   $('.profile').click(function(){
+      $('.dropdown-profile').slideToggle();
+   });
+   });
+
+
+   // input counter
+   function countChar(val) {
+   var len = val.value.length;
+   if (len >= 200) {
+      val.value = val.value.substring(0, 200);
+   } else {
+      $('#charNum').text(200 - len + " Character Left.");
+   }
+   };
+   $('.comment_btn').click(function(e){
+      e.preventDefault();
+      swal({
+         title: "Please Login!",
+         text: "You Have To Login For Comment",
+         icon: "error",
+         button: "Click For Login! :)",
+      }).then(function() {
+         window.location = "../login";
+      });
+   });
+</script>
+
+<?php
+if(isset($_POST['comment_btn'])){
+   $user_id = $_POST['user_id'];
+   $post_id = $_POST['post_id'];
+   $comment = $_POST['comment'];
+   if(empty($comment)){
+      echo '<script>
+       swal({
+         title: "",
+         text: "Comment Is Empty!",
+         icon: "error",
+         button: "Try Again!",
+       });
+       </script>';
+   }
+   else{
+      $stm = $pdo->prepare("INSERT INTO comments(user_id,post_id,content) VALUES(?,?,?)");
+      $result = $stm->execute(array($user_id,$post_id,$comment));
+      if($result == true){
+         echo '<script>
+         swal({
+            title: "",
+            text: "Comment Successfully Submit!",
+            icon: "success",
+            button: "OK",
+         }).then(function() {
+            window.location = window.location
+         };
+         </script>';
+
+      }
+   }
+}
+?>

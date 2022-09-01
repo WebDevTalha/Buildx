@@ -2,7 +2,6 @@
 
 
 // Get TimeStamp to Month Name And Year
-
 function getMonthName($timeStamp){
    $date = $timeStamp;
    $dt = new DateTime($date);
@@ -14,7 +13,6 @@ function getMonthName($timeStamp){
 }
 
 // Get Category Name
-
 function getCategoryName($slug) {
    global $pdo;
    $stm=$pdo->prepare("SELECT name FROM categories WHERE slug=?");
@@ -22,3 +20,12 @@ function getCategoryName($slug) {
    $result = $stm->fetchAll(PDO::FETCH_ASSOC);
    return $result[0]['name'];
  }
+
+//  Get User id to Details
+function getUserData($col,$id){
+   global $pdo;
+   $stm=$pdo->prepare("SELECT $col FROM users WHERE id=?");
+   $stm->execute(array($id));
+   $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+   return $result[0][$col];
+}

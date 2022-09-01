@@ -1,0 +1,138 @@
+.spacer {
+   width: 100%;
+   height: .2rem;
+   margin: 2rem 0 2.5rem 0;
+   background: #ddd;
+}
+.commenter {
+   display: flex;
+   gap: 2rem;
+   position: relative;
+}
+.replay-line {
+   height: 6rem;
+   width: .2rem;
+   background-color: #ddd;
+   position: absolute;
+   top: 7.08rem;
+   left: 3.5rem;
+}
+
+.comment-replay-line {
+   height: 4rem;
+   width: 4.5rem;
+   background-color: #fff;
+   position: absolute;
+   top: -1.4rem;
+   left: -4.5rem;
+   border-left: .2rem solid #ddd;
+   border-bottom: .2rem solid #ddd;
+   border-bottom-left-radius: 2rem;
+}
+.comm-profile .image {
+   width: 7rem;
+   height: 7rem;
+   border-radius: 50%;
+}
+.comm-name a {
+   color: #000;
+   font-weight: 700;
+   letter-spacing: .1rem;
+   font-size: 1.6rem;
+   margin-bottom: .5rem;
+}
+
+.comment-text p {
+   margin: 0;
+   color: #686868;
+}
+
+.comment-report {
+   position: relative;
+   align-self: center;
+}
+
+.comment-report p {
+   color: #000;
+   font-size: 1.7rem;
+   margin: 0;
+   cursor: pointer;
+}
+
+.comment-report .report-btns {
+   position: absolute;
+   top: 3.5rem;
+   left: -2rem;
+   padding: 1.3rem;
+   background-color: #fff;
+   color: #000;
+   font-weight: 700;
+   width: 29rem;
+   height: 5rem;
+   box-shadow: 0 0 2rem rgb(0 0 0 / 20%);
+   border-radius: 1rem;
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+}
+.report-btns::after {
+   content: '';
+   position: absolute;
+   top: -.8rem;
+   left: 2rem;
+   background: #fff;
+   width: 1.5rem;
+   height: 1.5rem;
+   transform: rotate(45deg);
+}
+.report-btns span {
+   display: block;
+   width: 100%;
+   padding: .5rem .8rem;
+   border-radius: 1rem;
+   transition: .3s;
+   cursor: pointer;
+}
+.report-btns span:hover {
+   background: #eee;
+}
+.comment-title {
+   margin-top: 3rem;
+}
+
+.comment-title h3 {
+   letter-spacing: .08rem;
+}
+.replay-commenter {
+   width: 90%;
+   margin-left: 8rem;
+   margin-top: 4rem;
+}
+.comment-replay-btn-area {
+   padding: 0.6rem 2rem;
+}
+
+p.replay-comment-btn {
+   color: #ffc107;
+   font-weight: 500;
+   transition: .3s;
+   display: inline-block;
+   cursor: pointer;
+   margin-right: 2rem;
+}
+
+p.replay-comment-btn:hover {
+   text-decoration: underline;
+}
+
+.commented-at {
+   display: inline-block;
+}
+.comment-box {
+   font-size: 1.6rem;
+}
+.replay-commenter .comm-profile .image {
+   width: 5rem;
+   height: 5rem;
+   border-radius: 50%;
+}

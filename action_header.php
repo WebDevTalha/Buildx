@@ -12,6 +12,7 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/css/dist/css/style.css">
+  <link rel="stylesheet" href="../assets/css/comment.css">
   <link rel="stylesheet" href="../assets/css/dist/css/responsive.css">
   <script src="https://kit.fontawesome.com/51f9c8d173.js" crossorigin="anonymous"></script>
   <link rel="icon" href="../assets/image/favicon.png">

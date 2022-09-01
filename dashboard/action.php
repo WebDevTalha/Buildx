@@ -179,7 +179,7 @@ else{
                                  </div>
                               </div>
                         </div>
-                        <button class="btn btn-primary" name="submit_article" type="submit">Create Article</button>
+                        <button class="btn btn-primary" name="submit_article" type="submit">Update Article</button>
                      </form>
                      <script>
                         // Example starter JavaScript for disabling form submissions if there are invalid fields
