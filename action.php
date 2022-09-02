@@ -60,7 +60,6 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                      $comment_count = $stm3->rowCount();
                      $result3 = $stm3->fetchAll(PDO::FETCH_ASSOC);
                      $i = 1;
-                     $ii = 50;
                      ?>
                      <?php if($comment_count != 0) :?>
                      <?php foreach($result3 as $comment_row) : ?>
@@ -74,9 +73,6 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                         <li class="mb-5">
                            <div class="commenter">
                               <input type="hidden" id="getCountBtn" value="<?php echo $comment_count; ?>">
-                              <?php if($comment_replay_count != 0) : ?>
-                              <div class="replay-line"></div>
-                              <?php endif; ?>
                               <div class="comm-profile">
                                  <div class="image">
                                     <a href="#"><img src="../uploads/user.png" alt="user"></a>
@@ -88,8 +84,16 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                                  </div>
                                  <p><?php echo $comment_row['content']; ?></p>
                                  <div class="comment-replay-btn-area">
-                                    <p class="replay-comment-btn">Replay</p>
+                                    <p class="replay-comment-btn" id="replay-comment-btn_<?php echo $i; ?>">Replay</p>
                                     <div class="commented-at"><?php echo getMonthName($comment_row['created_at']); ?></div>
+                                    <form action="" method="POST" id="replay-form_<?php echo $i; ?>" class="replay-form">
+                                       <input type="hidden" id="replay_comment_user_id_<?php echo $i; ?>" value="<?php if(isset($_SESSION['b_user_loggedin'])){echo $_SESSION['b_user_loggedin'][0]['id'];} ?>">
+                                       <input type="hidden" id="replay_comment_post_id_<?php echo $i; ?>" value="<?php echo $result2[0]['id']; ?>">
+                                       <input type="hidden" id="replay_comment_c_id_<?php echo $i; ?>" value="<?php echo $comment_row['id']; ?>">
+                                       <input type="text" id="replay_comment_content_<?php echo $i; ?>" class="form-control" placeholder="Replay To <?php echo getUserData('username',$comment_row['user_id']); ?>" >
+                                       <button type="submit" class="<?php if(!isset($_SESSION['b_user_loggedin'])){echo "user_not_login";} ?>" id="replay_comment_sent_btn_<?php echo $i; ?>"><i class="fa-solid fa-paper-plane"></i></button>
+                                    </form>
+                                    <span id="charNumCount_<?php echo $i; ?>" class="text-warning">200 Character Left</span>
                                  </div>
                               </div>
                               <div class="comment-report">
@@ -108,9 +112,10 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                            </div>
                            
                            <?php if($comment_replay_count != 0) : ?>
-                           <?php foreach($result4 as $comment_replay_row) : ?>
+                           <?php $a = 1; foreach($result4 as $comment_replay_row) : ?>
                            <div class="comment-replay">
                               <div class="replay-commenter commenter">
+                                 <div class="replay-line"></div>
                                  <div class="comment-replay-line"></div>
                                  <div class="comm-profile">
                                     <div class="image">
@@ -124,21 +129,21 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                                     <p><?php echo $comment_replay_row['content']; ?></p>
                                  </div>
                                  <div class="comment-report">
-                                    <p href="#" class="report-comment-replay-btn_<?php echo $i; ?>"><i class="fa-solid fa-ellipsis"></i></p>
+                                    <p href="#" class="report-comment-replay-btn_<?php echo $a; ?>"><i class="fa-solid fa-ellipsis"></i></p>
                                     <style>
-                                       .report-replay-btns-wrapper_<?php echo $i; ?> {
+                                       .report-replay-btns-wrapper_<?php echo $a; ?> {
                                           display: none;
                                        }
                                     </style>
-                                    <div class="report-replay-btns-wrapper_<?php echo $i; ?>">
+                                    <div class="report-replay-btns-wrapper_<?php echo $a; ?>">
                                        <div class="report-btns">
-                                          <span id="report-replay-send-btn_<?php echo $i; ?>">Report This Comment</span>
+                                          <span id="report-replay-send-btn_<?php echo $a; ?>">Report This Comment</span>
                                        </div>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                           <?php endforeach; ?>
+                           <?php $a++; endforeach; ?>
                            <?php endif; ?>
                         </li>
                         <?php $i++; endforeach; ?>
@@ -171,7 +176,9 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                      </div>
                      <div class="col-md-6">
                         <div class="article-copy">
-                           <button class="btn btn-secondary">Copy Link</button>
+                           <!-- <input type="hidden" id="copyToClipboard_share" value="http://localhost/Buildx/blog/builder-of-human-happiness-for-all-time"> -->
+                           <p class="d-none" id="copyToClipboard_share"><?php echo $_SERVER['SERVER_NAME']; ?>/Buildx/blog/<?php echo $slug; ?></p>
+                           <button onclick="copyToClipboard('#copyToClipboard_share')" class="btn btn-secondary">Copy Link</button>
                         </div>
                      </div>
                   </div>
@@ -358,7 +365,6 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
    $(document).ready(function(){
       let countBtn = $('#getCountBtn').val();
       for(let i = 1; i <= countBtn; i++){
-         // $('.report-btns-wrapper_'+i).hide();
          $('.report-comment-btn_'+i).click(function(){
             $('.report-btns-wrapper_'+i).toggle();
          });
@@ -380,11 +386,28 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
                }
             });
          });
+
+         // Replay Form Show
+         $('#replay-form_'+i).hide();
+         $('#charNumCount_'+i).hide();
+         $('#replay-comment-btn_'+i).click(function(){
+            $('#replay-form_'+i).toggle(300);
+            $('#charNumCount_'+i).toggle(300);
+         });
+
+         // input counter
+         $('#replay_comment_content_'+i).keyup(function(){
+            var len = this.value.length;
+            if (len >= 200) {
+               this.value = this.value.substring(0, 200);
+            } else {
+               $('#charNumCount_'+i).text(200 - len + " Character Left.");
+            }
+         });
+         
       }
 
       for(let ii = 1; ii <= countBtn; ii++){
-         console.log(ii);
-         // $('.report-btns-wrapper_'+i).hide();
          $('.report-comment-replay-btn_'+ii).click(function(){
             $('.report-replay-btns-wrapper_'+ii).toggle();
          });
@@ -420,13 +443,14 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
 
    // input counter
    function countChar(val) {
-   var len = val.value.length;
-   if (len >= 200) {
-      val.value = val.value.substring(0, 200);
-   } else {
-      $('#charNum').text(200 - len + " Character Left.");
-   }
+      var len = val.value.length;
+      if (len >= 200) {
+         val.value = val.value.substring(0, 200);
+      } else {
+         $('#charNum').text(200 - len + " Character Left.");
+      }
    };
+
    $('.comment_btn').click(function(e){
       e.preventDefault();
       swal({
@@ -438,7 +462,89 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
          window.location = "../login";
       });
    });
+   
+   // Form Enter press submition stop
+   $(document).ready(function() {
+      $(window).keydown(function(event){
+         if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+         }
+      });
+   });
+
+   // Copy function
+   function copyToClipboard(element) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+   }
+
 </script>
+<?php if(isset($_SESSION['b_user_loggedin'])) : ?>
+<script>
+   // Comment Replay Submition
+   let countBtn = $('#getCountBtn').val();
+   for(let i = 1; i <= countBtn; i++){
+         $('#replay_comment_sent_btn_'+i).click(function(e){
+            e.preventDefault();
+            const ajaxType = "comment_replay";
+            const user_id = $('#replay_comment_user_id_'+i).val();
+            const post_id = $('#replay_comment_post_id_'+i).val();
+            const comment_id = $('#replay_comment_c_id_'+i).val();
+            const comment_content = $('#replay_comment_content_'+i).val();
+            $.ajax({
+               type: "POST",
+               url:'../ajax',
+               data: {
+                  ajaxType: ajaxType,
+                  user_id: user_id,
+                  post_id: post_id,
+                  comment_id: comment_id,
+                  comment_content: comment_content
+               },
+               success:function(response){
+                  let data = response;
+                  if(data == 'success'){
+                     swal({
+                        title: "",
+                        text: "Replay Successfully Submit!",
+                        icon: "success",
+                        button: "Ok",
+                     }).then(function() {
+                        window.location = window.location;
+                     });
+                  } else if(data == 'error'){
+                     swal({
+                        title: "",
+                        text: "Replay Failed To Submit!",
+                        icon: "error",
+                        button: "OK",
+                     });
+                  }
+               }
+            }); 
+         });
+      }
+</script>
+<?php else : ?>
+
+<script>
+   $('.user_not_login').click(function(e){
+      e.preventDefault();
+      swal({
+         title: "Please Login!",
+         text: "You Have To Login For Comment",
+         icon: "error",
+         button: "Click For Login! :)",
+      }).then(function() {
+         window.location = "../login";
+      });
+   });
+</script>
+<?php endif; ?>
 
 <?php
 if(isset($_POST['comment_btn'])){
@@ -465,9 +571,7 @@ if(isset($_POST['comment_btn'])){
             text: "Comment Successfully Submit!",
             icon: "success",
             button: "OK",
-         }).then(function() {
-            window.location = window.location
-         };
+         });
          </script>';
 
       }

@@ -10,12 +10,13 @@
    position: relative;
 }
 .replay-line {
-   height: 6rem;
+   height: 13rem;
    width: .2rem;
    background-color: #ddd;
    position: absolute;
-   top: 7.08rem;
-   left: 3.5rem;
+   bottom: 6.39rem;
+   left: -4.5rem;
+   z-index: -1;
 }
 
 .comment-replay-line {
@@ -30,9 +31,10 @@
    border-bottom-left-radius: 2rem;
 }
 .comm-profile .image {
-   width: 7rem;
-   height: 7rem;
+   width: 7.5rem;
+   height: 7.5rem;
    border-radius: 50%;
+   box-shadow: 0rem -2.4rem 0rem #fff;
 }
 .comm-name a {
    color: #000;
@@ -135,4 +137,30 @@ p.replay-comment-btn:hover {
    width: 5rem;
    height: 5rem;
    border-radius: 50%;
+}
+
+form.replay-form {
+   min-width: 31rem;
+   margin: 1rem 0rem;
+   position: relative;
+}
+
+form.replay-form input {
+   font-size: 1.4rem;
+   padding: .5rem 4rem .5rem 1rem;
+   border-radius: 2rem;
+}
+
+form.replay-form button {
+   position: absolute;
+   top: 1px;
+   right: 1px;
+   border: none;
+   font-size: 1.6rem;
+   outline: none;
+   height: 95%;
+   width: 4rem;
+   border-radius: 2rem;
+   background: rgb(241 241 241);
+   color: #ffc107;
 }
