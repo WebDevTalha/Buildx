@@ -156,8 +156,9 @@
                                  </div>
                                  <div class="blog-actions">
                                     <a href="edit/<?php echo $row['slug']; ?>" class="btn btn-info">Edit</a>
-                                    <a href="#" class="btn btn-primary">View</a>
-                                    <a href="delete/<?php echo $row['slug']; ?>" class="btn btn-danger">Delete</a>
+                                    <a href="../blog/<?php echo $row['slug']; ?>" class="btn btn-primary">View</a>
+                                    <a href="" class="delete_btn btn btn-danger">Delete</a>
+                                    <input type="hidden" class="delete_btn_s" value="<?php echo $row['slug']; ?>">
                                  </div>
                                  <div class="service-image">
                                     <img src="<?php echo $row['thumbnail']; ?>" alt="Post Image">
@@ -179,3 +180,26 @@
     
 
 <?php require_once('footer.php'); ?>
+
+<script>
+   $(document).ready(function(){
+      $('.delete_btn').click(function(e){
+         e.preventDefault();
+         let deleteSlug = $(this).closest('.blog-actions').find('.delete_btn_s').val();
+         console.log(deleteSlug);
+         swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover article!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+         }).then((willDelete) => {
+            if (willDelete) {
+               window.location = "delete/"+deleteSlug;
+            } else {
+               swal("Your article is safe!");
+            }
+         });
+      });
+   });
+</script>

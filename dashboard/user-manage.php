@@ -11,7 +11,7 @@
                            <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"> </i>
                      </div>
                      <div>
-                           All Categories
+                           User Manage
                      </div>
                 </div>
                 <div class="page-title-actions">
@@ -23,10 +23,10 @@
             <div class="col-md-12">
                <div class="main-card mb-3 card">
                   <div class="card-body">
-                        <h5 class="card-title"> All Categories</h5>
+                        <h5 class="card-title">User Manage</h5>
                         <?php
                         $i = 1;
-                        $stm=$pdo->prepare("SELECT * FROM categories");
+                        $stm=$pdo->prepare("SELECT * FROM users");
                         $stm->execute(array());
                         $result = $stm->fetchAll(PDO::FETCH_ASSOC);
                         ?>
@@ -34,8 +34,9 @@
                            <thead>
                               <tr>
                                     <th>#</th>
-                                    <th>Category Name</th>
-                                    <th>Slug</th>
+                                    <th>Username</th>
+                                    <th>Mail</th>
+                                    <th>Gender</th>
                                     <th>Action</th>
                               </tr>
                            </thead>
@@ -43,8 +44,9 @@
                               <?php foreach($result as $row) :?>
                               <tr>
                                     <th scope="row"><?php echo $i; $i++; ?></th>
-                                    <td><?php echo $row['name']; ?></td>
-                                    <td><?php echo $row['slug']; ?></td>
+                                    <td><?php echo $row['username']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
+                                    <td><?php echo $row['gender']; ?></td>
                                     <td>
                                           <a href="#" class="btn btn-warning text-white" title="Edit"><i class="pe-7s-note"></i></a>
                                           <a href="#" class="btn btn-danger text-white" title="Delete"><i class="pe-7s-trash"></i></a>

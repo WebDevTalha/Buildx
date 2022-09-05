@@ -391,7 +391,7 @@ if(!isset($_SESSION['b_admin_loggedin'])){
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="../user-manage">
                                         <i class="metismenu-icon pe-7s-user"></i>
                                         Users Manage
                                     </a>
