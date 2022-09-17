@@ -29,6 +29,8 @@ else{
 
 
 <?php if($type == 'blog') : ?>
+
+
 <?php
 $stm2=$pdo->prepare("SELECT * FROM articles WHERE slug=?");
 $stm2->execute(array($slug));
@@ -274,6 +276,14 @@ $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
 }
 .content p {
    color: #6d7396;
+}
+.page-item.active .page-link {
+   color: #fff !important;
+   background-color: #fab702 !important;
+   border-color: #fab702 !important;
+}
+.page-link {
+	color: #fab702 !important;
 }
 </style>
 

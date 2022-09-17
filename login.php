@@ -1,6 +1,5 @@
-<?php require_once('config.php');?>
+<?php require_once('header.php');?>
 <?php 
-session_start();
 
 
 if(isset($_SESSION['b_user_loggedin'])){
@@ -10,16 +9,6 @@ if(isset($_SESSION['b_user_loggedin'])){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>User Login</title>
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <link rel="shortcut icon" href="assets/image/favicon.png" />
   <style>
    body {
   background-color: rgb(228, 229, 247);
@@ -33,7 +22,7 @@ a {
 
 .card {
     font-family: sans-serif;
-    width: 450px;
+    max-width: 450px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 3em;
@@ -43,11 +32,15 @@ a {
     padding: 1.8rem;
     box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.1);
 }
+input {
+    font-size: 1.5rem !important;
+}
 
 .title {
   text-align: center;
   font-weight: bold;
   margin: 0;
+  font-size: 2.6rem;
 }
 .subtitle a {
    color: #ffc107;
@@ -118,13 +111,17 @@ input[type="password"] {
 }
 
 .cta-btn {
-  color: white;
-  padding: 18px 20px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  border-radius: 10px;
-  border: none;
+    color: white;
+    padding: 18px 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    font-size: 2rem;
+}
+.header-nav-wrapper {
+    background: #fff;
 }
 
 .forget-pass {
@@ -133,9 +130,6 @@ input[type="password"] {
 }
 
   </style>
-</head>
-
-<body>
 
 <div class="card">
   <form action="" method="POST" class="needs-validation" novalidate>
@@ -155,8 +149,8 @@ input[type="password"] {
     <p class="or"><span>or</span></p>
 
     <div class="email-login">
-      <label for="validationCustom01" class="form-label"> <b>Email</b></label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="Enter Email" name="email" required>
+      <label for="validationCustom01" class="form-label"> <b>Username Or Email</b></label>
+      <input type="text" class="form-control" id="validationCustom01" placeholder="Enter Username Or Email" name="email" required>
       <div class="valid-feedback">
       Looks good!
       </div>
@@ -166,19 +160,13 @@ input[type="password"] {
          Please provide a valid Password.
       </div>
     </div>
-    <button class="cta-btn btn-warning btn" name="login_btn" type="submit">Log In</button>
+    <button class="cta-btn btn-warning btn" name="login_btn" type="submit">LogIn</button>
     <a class="forget-pass" href="#">Forgot password?</a>
     </form>
 </div>
 
 
-  <script src="assets/js/jquery-3.6.0.min.js"></script>
-  <script src="assets/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/sweetalert.min.js"></script>
-
-</body>
-
-</html>
+<?php require_once("footer.php"); ?>
 
 <?php
 
@@ -207,8 +195,8 @@ if(isset($_POST['login_btn'])){
      </script>';
    }
    else{
-     $stm = $pdo->prepare("SELECT * FROM users WHERE email=? AND password=?");
-     $stm->execute(array($email,SHA1($password)));
+     $stm = $pdo->prepare("SELECT * FROM users WHERE email=? OR username=? AND password=?");
+     $stm->execute(array($email,$email,SHA1($password)));
      $admin_count = $stm->rowCount();
  
      if($admin_count == 1){
@@ -224,7 +212,7 @@ if(isset($_POST['login_btn'])){
        echo '<script>
        swal({
          title: "",
-         text: "Username Or Password Is Wrong!",
+         text: "Username Or Email Or Password Is Wrong!",
          icon: "warning",
          button: "Try Again!",
        });

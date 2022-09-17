@@ -1,5 +1,6 @@
 <?php
 require_once("config.php");
+
 // Comment Replay
 if(isset($_POST['ajaxType'])){
    $user_id = $_POST['user_id'];

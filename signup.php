@@ -1,6 +1,5 @@
-<?php require_once('config.php');?>
+<?php require_once('header.php');?>
 <?php 
-session_start();
 
 
 if(isset($_SESSION['b_admin_loggedin'])){
@@ -10,16 +9,6 @@ if(isset($_SESSION['b_admin_loggedin'])){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Admin Login</title>
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <link rel="shortcut icon" href="assets/image/favicon.png" />
   <style>
    body {
   background-color: rgb(228, 229, 247);
@@ -33,7 +22,7 @@ a {
 
 .card {
     font-family: sans-serif;
-    width: 450px;
+    max-width: 450px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 3em;
@@ -42,6 +31,9 @@ a {
     background-color: #ffff;
     padding: 1.8rem;
     box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.1);
+}
+input {
+    font-size: 1.5rem !important;
 }
 
 .title {
@@ -118,13 +110,17 @@ input[type="password"] {
 }
 
 .cta-btn {
-  color: white;
-  padding: 18px 20px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  border-radius: 10px;
-  border: none;
+    color: white;
+    padding: 18px 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    font-size: 2rem;
+}
+.header-nav-wrapper {
+    background: #fff;
 }
 
 .forget-pass {
@@ -201,9 +197,6 @@ input[type="password"] {
 }
 
   </style>
-</head>
-
-<body>
 
 <div class="card">
   <form action="" method="POST" class="needs-validation" novalidate>
@@ -254,7 +247,7 @@ input[type="password"] {
       <label><input type="radio" name="gender" value="Female" id="genderFemale"> Female</label>
     </div>
     <button class="cta-btn btn-warning btn signup_btn" type="submit" name="signup_btn" id="signup_btn">Sign up</button>
-    <a class="forget-pass" href="#">Login</a>
+    <a class="forget-pass" href="login">Login</a>
     </form>
     <script>
       (function () {
@@ -279,10 +272,7 @@ input[type="password"] {
     </script>
 </div>
 
-
-  <script src="assets/js/jquery-3.6.0.min.js"></script>
-  <script src="assets/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/sweetalert.min.js"></script>
+<?php require_once("footer.php"); ?>
 
   <script>
       $(document).ready(function(){
@@ -530,7 +520,4 @@ input[type="password"] {
 
       });
   </script>
-</body>
-
-</html>
 
