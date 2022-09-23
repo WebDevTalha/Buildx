@@ -37,8 +37,8 @@
   <section class="contact-us-today-area">
     <div class="container">
       <div class="contact-us-today">
-        <h1>Consulting And Estimate For Your Project, <a href="#">Contact Us Today</a></h1>
-        <a class="cuta" href="#">Get a Quote</a>
+        <h1>Consulting And Estimate For Your Project, <a href="contact">Contact Us Today</a></h1>
+        <a class="cuta" href="contact">Get a Quote</a>
       </div>
     </div>
   </section>
@@ -99,7 +99,7 @@
             <img src="assets/image/video/1.png" alt="icon">
           </div>
           <div class="video-text">
-            <h4><a href="#">GENERAL BUILDER</a></h4>
+            <h4><a href="category/general-builder">GENERAL BUILDER</a></h4>
             <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
           </div>
         </div>
@@ -109,7 +109,7 @@
             <img src="assets/image/video/2.png" alt="icon">
           </div>
           <div class="video-text">
-            <h4><a href="#">HOUSE EXTENSIONS</a></h4>
+            <h4><a href="category/house-extensions">HOUSE EXTENSIONS</a></h4>
             <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
           </div>
         </div>
@@ -119,7 +119,7 @@
             <img src="assets/image/video/3.png" alt="icon">
           </div>
           <div class="video-text">
-            <h4><a href="#">REFURBISHMENT</a></h4>
+            <h4><a href="category/refurbishment">REFURBISHMENT</a></h4>
             <p>Lorem ipsum dolor sit amet, sed dicunt oporteat cuum Tuo iomnis persequeris neglegentur, facete commodo ea use possit lucilius.</p>
           </div>
         </div>

@@ -96,8 +96,8 @@ session_start();
             <p>Have any question?</p>
           </div>
           <div class="header-top-contact-info">
-            <a href="mailto:abut7270@gmail.com" title="Send Mail"><i class="fa-solid fa-envelope"></i> contact@mail.com</a>
-            <a href="tel:01575561781" title="Make A Call"><i class="fa-solid fa-phone"></i> +080 0444 333 444</a>
+            <a href="mailto:mdfarhantanvirtalha@gmail.com" title="Send Mail"><i class="fa-solid fa-envelope"></i> mdfarhantanvirtalha@gmail.com</a>
+            <a href="tel:01575561781" title="Make A Call"><i class="fa-solid fa-phone"></i> +880 1575-561781</a>
           </div>
         </div>
       </div>
@@ -118,8 +118,8 @@ session_start();
             <ul>
               <li><a class="<?php if($hi == "index"){echo "active";} ?>" href="index">Home</a></li>
               <li><a class="<?php if($hi == "blogs"){echo "active";} ?>" href="blogs">Blogs</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a class="<?php if($hi == "about"){echo "active";} ?>" href="about">About</a></li>
+              <li><a class="<?php if($hi == "contact"){echo "active";} ?>" href="contact">Contact</a></li>
               <?php if(isset($_SESSION['b_user_loggedin'])) : ?>
               <li>
                 <div class="profile">
