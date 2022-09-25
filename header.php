@@ -113,13 +113,13 @@ session_start();
             <a class="bars" href="#"><i class="fa-solid fa-bars"></i></a>
             <?php
             // print_r($_SERVER['SCRIPT_FILENAME']);
-            $hi = basename($_SERVER["SCRIPT_FILENAME"], '.php');
+            $page = basename($_SERVER["SCRIPT_FILENAME"], '.php');
             ?>
             <ul>
-              <li><a class="<?php if($hi == "index"){echo "active";} ?>" href="index">Home</a></li>
-              <li><a class="<?php if($hi == "blogs"){echo "active";} ?>" href="blogs">Blogs</a></li>
-              <li><a class="<?php if($hi == "about"){echo "active";} ?>" href="about">About</a></li>
-              <li><a class="<?php if($hi == "contact"){echo "active";} ?>" href="contact">Contact</a></li>
+              <li><a class="<?php if($page == "index"){echo "active";} ?>" href="index">Home</a></li>
+              <li><a class="<?php if($page == "blogs"){echo "active";} ?>" href="blogs">Blogs</a></li>
+              <li><a class="<?php if($page == "about"){echo "active";} ?>" href="about">About</a></li>
+              <li><a class="<?php if($page == "contact"){echo "active";} ?>" href="contact">Contact</a></li>
               <?php if(isset($_SESSION['b_user_loggedin'])) : ?>
               <li>
                 <div class="profile">
