@@ -188,8 +188,8 @@ session_start();
             <ul>
               <li><a class="<?php if($hi == "index"){echo "active";} ?>" href="../index">Home</a></li>
               <li><a class="<?php if($hi == "blogs"){echo "active";} ?>" href="../blogs">Blogs</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="../about">About</a></li>
+              <li><a href="../contact">Contact</a></li>
               <?php if(isset($_SESSION['b_user_loggedin'])) : ?>
               <li>
                 <div class="profile">

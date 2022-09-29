@@ -46,8 +46,9 @@
                                     <td><?php echo $row['name']; ?></td>
                                     <td><?php echo $row['slug']; ?></td>
                                     <td>
-                                          <a href="#" class="btn btn-warning text-white" title="Edit"><i class="pe-7s-note"></i></a>
-                                          <a href="#" class="btn btn-danger text-white" title="Delete"><i class="pe-7s-trash"></i></a>
+                                          <a href="edit_category/<?php echo $row['slug']; ?>" class="btn btn-warning text-white" title="Edit"><i class="pe-7s-note"></i></a>
+                                          <a href="delete" class="btn btn-danger text-white delete_btn" title="Delete"><i class="pe-7s-trash"></i></a>
+                                          <input type="hidden" class="delete_btn_s" value="<?php echo $row['slug']; ?>">
                                     </td>
                               </tr>
                               <?php endforeach; ?>
@@ -61,3 +62,55 @@
     
 
 <?php require_once('footer.php'); ?>
+
+
+<script>
+   $(document).ready(function(){
+      $('.delete_btn').click(function(e){
+         e.preventDefault();
+         let deleteSlug = $(this).closest('td').find('.delete_btn_s').val();
+         let deleteElement = $(this).closest('tr');
+         let categoryDelete = "delete";
+         swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover user data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+         }).then((willDelete) => {
+            if (willDelete) {
+                  $.ajax({
+                        type: "POST",
+                        url:'ajax',
+                        data: {
+                              categoryDelete: categoryDelete,
+                              deleteSlug: deleteSlug
+                        },
+                        success:function(response){
+                              let getData = response;
+                              console.log(getData);
+                              if(getData === 'success'){
+                                    swal({
+                                          title: "",
+                                          text: "User Delete Successfully",
+                                          icon: "success",
+                                          button: "Close",
+                                    });
+                                    deleteElement.remove();
+                              } else{
+                                    swal({
+                                          title: "",
+                                          text: "User Delete Failed!",
+                                          icon: "error",
+                                          button: "Close",
+                                    });
+                              }
+                        }
+                  }); 
+            } else {
+               swal("User Data is safe!");
+            }
+         });
+      });
+   });
+</script>

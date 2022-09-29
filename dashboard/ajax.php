@@ -29,3 +29,25 @@ if(isset($_POST['currentPass'])){
       echo "update";
    }
 }
+
+if(isset($_POST['userDelete'])){
+   $id = $_POST['deleteSlug'];
+   $stm = $pdo->prepare("DELETE FROM users WHERE id=?");
+   $result = $stm->execute(array($id));
+   if($result == true){
+      echo 'success';
+   } else{
+      echo 'failed';
+   }
+}
+
+if(isset($_POST['categoryDelete'])){
+   $slug = $_POST['deleteSlug'];
+   $stm = $pdo->prepare("DELETE FROM categories WHERE slug=?");
+   $result = $stm->execute(array($slug));
+   if($result == true){
+      echo 'success';
+   } else{
+      echo 'failed';
+   }
+}

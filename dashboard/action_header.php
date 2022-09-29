@@ -1,11 +1,13 @@
 <?php
-
-require_once('../functions.php');
+require_once('config.php');
+require_once('functions.php');
 session_start();
 
 if(!isset($_SESSION['b_admin_loggedin'])){
     header("location:login");
-}
+} 
+
+$user_id = $_SESSION['b_admin_loggedin'][0]['id'];
 
 ?>
 
@@ -38,7 +40,7 @@ if(!isset($_SESSION['b_admin_loggedin'])){
             }
 
         </style>
-        <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+        <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
     </head>
 
     <body>
@@ -93,12 +95,12 @@ if(!isset($_SESSION['b_admin_loggedin'])){
                                     <div class="widget-content-left">
                                         <div class="btn-group">
                                             <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                                <img width="42" class="rounded-circle" src="../assets/images/avatars/2.jpg" alt="" />
+                                            <img width="42" class="rounded-circle profile_updated" src="../<?php if(admin("profile_photo",$user_id) != null){echo admin('profile_photo',$user_id);}else{echo "../uploads/user.png";} ?>" alt="" />
                                                 <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                             </a>
                                             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                                 <a href="../change-profile-photo" class="dropdown-item">Change Profile Photo</a>
-                                                <a href="" class="dropdown-item">Settings</a>
+                                                <a href="#" class="dropdown-item">Settings</a>
                                                 <a href="../change-password" class="dropdown-item">Change Password</a>
                                                 <div tabindex="-1" class="dropdown-divider"></div>
                                                 <a href="../logout" class="dropdown-item">Logout</a>
@@ -354,13 +356,17 @@ if(!isset($_SESSION['b_admin_loggedin'])){
                         <div class="app-sidebar__inner">
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading"></li>
+                                <?php
+                                // print_r($_SERVER['SCRIPT_FILENAME']);
+                                $page = basename($_SERVER["SCRIPT_FILENAME"], '.php');
+                                ?>
                                 <li>
-                                    <a href="../index" class="mm-active mt-4">
+                                    <a class="<?php if($page == "index"){echo "mm-active";} ?> mt-4" href="../index">
                                         <i class="metismenu-icon pe-7s-rocket"></i>
                                         Dashboard
                                     </a>
                                 </li>
-                                <li>
+                                <li class="<?php if($page == "blog-articles" OR $page == "create-new-articles"){echo "mm-active";} ?>">
                                     <a href="#">
                                         <i class="metismenu-icon pe-7s-display2"></i>
                                         Posts
@@ -368,14 +374,14 @@ if(!isset($_SESSION['b_admin_loggedin'])){
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="../blog-articles"><i class="metismenu-icon"></i> Blog Articles </a>
+                                            <a class="<?php if($page == "blog-articles"){echo "mm-active";} ?>" href="../blog-articles"><i class="metismenu-icon"></i> Blog Articles </a>
                                         </li>
                                         <li>
-                                            <a href="../create-new-articles"> <i class="metismenu-icon"> </i>Create New Articles </a>
+                                            <a class="<?php if($page == "create-new-articles"){echo "mm-active";} ?>" href="../create-new-articles"> <i class="metismenu-icon"> </i>Create New Articles </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li class="<?php if($page == "blog-categoris" OR $page == "create-new-category"){echo "mm-active";} ?>">
                                     <a href="#">
                                         <i class="metismenu-icon pe-7s-network"></i>
                                         Blog Categoris
@@ -383,21 +389,21 @@ if(!isset($_SESSION['b_admin_loggedin'])){
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="../blog-categoris"> <i class="metismenu-icon"> </i>All Categoris </a>
+                                            <a class="<?php if($page == "blog-categoris"){echo "mm-active";} ?>" href="../blog-categoris"> <i class="metismenu-icon"> </i>All Categoris </a>
                                         </li>
                                         <li>
-                                            <a href="../create-new-category"> <i class="metismenu-icon"> </i>Create New Category </a>
+                                            <a class="<?php if($page == "create-new-category"){echo "mm-active";} ?>" href="../create-new-category"> <i class="metismenu-icon"> </i>Create New Category </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="../user-manage">
+                                    <a class="<?php if($page == "user-manage"){echo "mm-active";} ?>" href="../user-manage">
                                         <i class="metismenu-icon pe-7s-user"></i>
                                         Users Manage
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a class="<?php if($page == "comment-manage"){echo "mm-active";} ?>" href="../comment-manage">
                                         <i class="metismenu-icon pe-7s-help2"></i>
                                        Comments Manage
                                     </a>

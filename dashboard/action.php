@@ -20,8 +20,11 @@ if($type == 'delete'){
 else if($type == 'edit'){
    echo "";
 }
+else if($type == 'edit_category'){
+   echo "";
+}
 else{
-   echo "Nothing Will Be Happend";
+   echo "Nothing";
 }
 
 
@@ -440,6 +443,139 @@ if(isset($_POST['submit_article'])){
 }
 
 ?>
+<?php elseif($type == 'edit_category') : ?>
+   <?php require_once('action_header.php'); ?>
+
+
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                     <div class="page-title-icon">
+                           <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"> </i>
+                     </div>
+                     <div>
+                        Edit Category
+                     </div>
+                </div>
+                <div class="page-title-actions">
+                    
+                </div>
+            </div>
+        </div>
+        <?php
+        $stm2=$pdo->prepare("SELECT * FROM categories WHERE slug=?");
+        $stm2->execute(array($slug));
+        $result2 = $stm2->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+               <div class="main-card mb-3 card">
+                  <div class="card-body">
+                     <h5 class="card-title">Enter Category Name</h5>
+                     <form action="" method="POST" class="needs-validation" novalidate>
+                        <div class="form-row">
+                              <div class="col-md-12 mb-3">
+                                 <label for="validationCustom01">Name:</label>
+                                 <input type="text" name="name" class="form-control" id="validationCustom01" value="<?php echo $result2[0]['name']; ?>" required />
+                                 <div class="valid-feedback">
+                                    Looks good!
+                                 </div>
+                              </div>
+                        </div>
+                        <div class="form-row">
+                              <div class="col-md-12 mb-3">
+                                 <label for="validationCustom03">Slug:</label>
+                                 <input type="text" name="slug" class="form-control" id="validationCustom03" value="<?php echo $result2[0]['slug']; ?>" readonly required />
+                                 <div class="invalid-feedback" id="invalidSlug">
+                                   Slug Is Already Exits.
+                                 </div>
+                              </div>
+                        </div>
+                        <input type="hidden" name="id" value="<?php echo $result2[0]['id']; ?>">
+
+                        <button class="btn btn-primary" type="submit" name="submit_btn">Update Category</button>
+                     </form>
+                     <script>
+                        // Example starter JavaScript for disabling form submissions if there are invalid fields
+                        (function () {
+                              "use strict";
+                              window.addEventListener(
+                                 "load",
+                                 function () {
+                                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                    var forms = document.getElementsByClassName("needs-validation");
+                                    // Loop over them and prevent submission
+                                    var validation = Array.prototype.filter.call(forms, function (form) {
+                                          form.addEventListener(
+                                             "submit",
+                                             function (event) {
+                                                if (form.checkValidity() === false) {
+                                                      event.preventDefault();
+                                                      event.stopPropagation();
+                                                }
+                                                form.classList.add("was-validated");
+                                             },
+                                             false
+                                          );
+                                    });
+                                 },
+                                 false
+                              );
+                        })();
+                     </script>
+                  </div>
+               </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <?php require_once('action_footer.php'); ?>
+
+<script>
+   $("#validationCustom01").keyup(function() {
+      var Text = $(this).val();
+      Text = Text.toLowerCase();
+      Text = Text.replace(/[^a-zA-Z0-9]+/g,'-');
+      $("#validationCustom03").val(Text);        
+   });
+</script>
+
+
+<?php
+
+if(isset($_POST['submit_btn'])){
+   $name = $_POST['name'];
+   $slug = $_POST['slug'];
+   $id = $_POST['id'];
+   $slug_count = categorySlugCount('slug',$slug);
+   echo $slug_count;
+   if($slug_count != 0){
+      echo '<script>
+      document.getElementById("invalidSlug").style.display = "block";
+      </script>';
+   }
+   else{
+      $stm=$pdo->prepare("UPDATE categories SET name=?, slug=? WHERE id=?");
+      $stm->execute(array($name,$slug,$id));
+      echo "<script>
+      swal({
+         title: 'Success!',
+         text: 'Category Update Successfully!',
+         icon: 'success',
+         button: 'Ok!',
+      }).then(function() {
+         window.location = '../blog-categoris';
+      });
+      </script>";
+   }
+}
+
+
+?>
+
 <?php else : ?>
    
    <script src="../assets/scripts/sweetalert.min.js"></script>
